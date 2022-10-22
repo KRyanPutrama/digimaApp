@@ -19,7 +19,12 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
+    "baseUrl": "./src",
+     "paths": {
+      "@/*": ["./*"],
+     },
     /* Completeness */
+    
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "exclude": [
