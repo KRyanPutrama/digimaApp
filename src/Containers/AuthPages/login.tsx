@@ -24,9 +24,6 @@ const IndexOfLogin = () => {
       <TouchableOpacity>
         <Text>LOGIN</Text>
       </TouchableOpacity>
-      <View>
-        <Text>TESSSSSSSSSSS</Text>
-      </View>
     </View>
   );
 };
