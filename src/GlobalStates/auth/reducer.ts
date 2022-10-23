@@ -4,8 +4,13 @@ import { ReducerState } from './_prototype';
 
 const INITIAL_STATE: ReducerState = {
   token: null,
+
+  authData: null,
   authState: '',
+  authError: null,
 };
+
+export const POST_LOGIN = 'POST_LOGIN';
 
 export const actionReducer = produce(
   (
@@ -13,10 +18,26 @@ export const actionReducer = produce(
     action: ActionReducer,
   ): ReducerState => {
     switch (action.type) {
-      case 'TEST':
+      case `${POST_LOGIN}_LOADING`:
         return {
           ...state,
+          authData: null,
           authState: '',
+          authError: null,
+        };
+      case `${POST_LOGIN}_SUCCESS`:
+        return {
+          ...state,
+          authData: action.payload,
+          authState: '',
+          authError: null,
+        };
+      case `${POST_LOGIN}_FAILED`:
+        return {
+          ...state,
+          authData: null,
+          authState: '',
+          authError: action.payload,
         };
 
       default:

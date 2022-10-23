@@ -9,7 +9,7 @@ type RoutesType = {
   params?: Record<string, any>;
 };
 
-export const navigationRef = React.createRef<NavigationContainerRef>();
+export const navigationRef = React.createRef<NavigationContainerRef<any>>();
 
 export function navigate(name: string, params?: any | null) {
   navigationRef.current?.navigate(name, params);
