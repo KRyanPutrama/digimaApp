@@ -9,18 +9,14 @@ export type ApiRequest<Res> = {
 
 export type ApiResponse<T = any> = {
   data: T | null | Record<string, any>; // | any[]
-  success: boolean;
-  error: Record<string, any> | null;
-  msg: string;
+  messasge?: string;
+  status?: number;
 };
 
 export type ApiResponseError = {
   data?: null | Record<string, any>; // | any[]
-  success?: boolean;
-  error?: Record<string, any> | null;
-  msg?: string;
+  messasge?: string;
   status?: number;
-  status_text?: string;
 };
 
 export type CallbackResult<T = any> =

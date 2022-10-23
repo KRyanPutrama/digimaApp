@@ -15,7 +15,7 @@ export const postLogin = (_data: proto.PostAuthReq) =>
         url: '/login',
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'multipart/form-data',
         },
         data: {
           ..._data,
@@ -28,11 +28,9 @@ export const postLogin = (_data: proto.PostAuthReq) =>
         },
       }),
     fulfilled(response) {
-      console.log(response);
-      return response;
+      return response.data;
     },
     rejected(error) {
-      console.log(error);
       return error;
     },
   });

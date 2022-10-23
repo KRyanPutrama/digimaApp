@@ -16,10 +16,10 @@ export const fetchApi =
       type: label,
       payload: action(token || '')
         .then((response: AxiosResponse<ApiResponse<Res>>) => {
-          console.log(response);
+          // console.log('success', JSON.stringify(response,));
           const { data } = response || {};
-          const { success } = data || null;
-          if (success) {
+          const { status } = data || null;
+          if (status === 200) {
             dispatch({
               type: `${label}_SUCCESS`,
               payload: fulfilled(data),
@@ -32,12 +32,11 @@ export const fetchApi =
           }
         })
         .catch((responseError: AxiosError<ApiResponseError>) => {
-          console.log(responseError);
-          // const errorData = responseError.response?.data;
-          // dispatch({
-          //   type: `${label}_FAILED`,
-          //   payload: rejected(errorData as ApiResponseError),
-          // });
+          const errorData = responseError.response?.data;
+          dispatch({
+            type: `${label}_FAILED`,
+            payload: rejected(errorData as ApiResponseError),
+          });
         }),
     };
   };
