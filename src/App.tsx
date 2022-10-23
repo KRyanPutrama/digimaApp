@@ -7,32 +7,24 @@
  *
  * @format
  */
-
 import React from 'react';
-import { SafeAreaView, useColorScheme } from 'react-native';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from './GlobalStates/store';
 
 import ApplicationNavigator from './Navigators/Application';
+import { store, persistor } from '@/GlobalStates/store';
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ApplicationNavigator />
         </PersistGate>
       </Provider>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
