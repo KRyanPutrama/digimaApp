@@ -1,13 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import { IndexOfLoginContainer, IndexOfHomeContainer } from '../Containers';
+import { IndexOfLoginContainer, IndexOfHomeContainer } from '@/Containers';
 
 import { RootReducerState } from '../GlobalStates/reducer';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const ApplicationNavigator = () => {
   const { isAuthenticate } = useSelector(
