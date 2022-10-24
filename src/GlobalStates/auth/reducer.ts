@@ -11,6 +11,8 @@ const INITIAL_STATE: ReducerState = {
 };
 
 export const POST_LOGIN = 'POST_LOGIN';
+export const SET_USER_TOKEN = 'SET_USER_TOKEN';
+export const DELETE_USER_TOKEN = 'DELETE_USER_TOKEN';
 
 export const actionReducer = produce(
   (
@@ -18,25 +20,35 @@ export const actionReducer = produce(
     action: ActionReducer,
   ): ReducerState => {
     switch (action.type) {
+      case SET_USER_TOKEN:
+        return {
+          ...state,
+          token: action.payload,
+        };
+      case DELETE_USER_TOKEN:
+        return {
+          ...state,
+          token: null,
+        };
       case `${POST_LOGIN}_LOADING`:
         return {
           ...state,
           authData: null,
-          authState: '',
+          authState: 'loading',
           authError: null,
         };
       case `${POST_LOGIN}_SUCCESS`:
         return {
           ...state,
           authData: action.payload,
-          authState: '',
+          authState: 'success',
           authError: null,
         };
       case `${POST_LOGIN}_FAILED`:
         return {
           ...state,
           authData: null,
-          authState: '',
+          authState: 'error',
           authError: action.payload,
         };
 

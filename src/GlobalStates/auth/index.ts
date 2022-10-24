@@ -27,7 +27,11 @@ export const postLogin = (_data: proto.PostAuthReq) =>
           version: '7.0',
         },
       }),
-    fulfilled(response) {
+    fulfilled(response, dispatch) {
+      dispatch({
+        type: reducerLabel.SET_USER_TOKEN,
+        payload: response.data?.user.token,
+      });
       return response.data;
     },
     rejected(error) {
