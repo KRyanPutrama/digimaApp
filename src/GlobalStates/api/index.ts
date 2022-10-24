@@ -4,10 +4,14 @@ import { ApiRequest, ApiResponse, ApiResponseError } from './_prototype';
 import { Dispatch } from 'react';
 
 import { ReducerState as AuthReducerState } from '../auth/';
+import { AnyAction } from 'redux';
 
 export const fetchApi =
   <Res>({ label, action, fulfilled, rejected }: ApiRequest<Res>) =>
-  async (dispatch: Dispatch<ActionReducer<Res>>, getState: () => any) => {
+  async (
+    dispatch: Dispatch<ActionReducer<Res>> | Dispatch<AnyAction>,
+    getState: () => any,
+  ) => {
     dispatch({ type: `${label}_LOADING` });
 
     const { token }: AuthReducerState = (await getState().auth) || {};
@@ -22,7 +26,7 @@ export const fetchApi =
           if (status === 200) {
             dispatch({
               type: `${label}_SUCCESS`,
-              payload: fulfilled(data),
+              payload: fulfilled(data, dispatch),
             });
           } else {
             dispatch({
