@@ -11,15 +11,12 @@ import { RootReducerState } from '../GlobalStates/reducer';
 const Stack = createStackNavigator();
 
 const ApplicationNavigator = () => {
-  const { isAuthenticate, loginData } = useSelector(
+  const { isAuthenticate } = useSelector(
     ({ auth }: RootReducerState) => ({
-      loginData: auth.authData,
       isAuthenticate: auth.token,
     }),
     shallowEqual,
   );
-
-  console.log(loginData);
 
   return (
     <NavigationContainer>

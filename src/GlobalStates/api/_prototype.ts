@@ -1,15 +1,19 @@
 import { AxiosPromise } from 'axios';
+import { Dispatch } from 'react';
 
 export type ApiRequest<Res> = {
   label: string;
   action: (accessToken: string) => AxiosPromise;
-  fulfilled: (res: ApiResponse<Res>) => Res | null | {} | [];
+  fulfilled: (
+    res: ApiResponse<Res>,
+    dispatch: Dispatch<any>,
+  ) => Res | null | {} | [];
   rejected: (err: ApiResponseError) => ApiResponseError;
 };
 
 export type ApiResponse<T = any> = {
   data: T | null | Record<string, any>; // | any[]
-  messasge?: string;
+  message?: string;
   status?: number;
 };
 
