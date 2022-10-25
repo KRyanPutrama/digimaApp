@@ -14,7 +14,7 @@ export const fetchApi =
   ) => {
     dispatch({ type: `${label}_LOADING` });
 
-    const { token }: AuthReducerState = (await getState().auth) || {};
+    const { token }: AuthReducerState = await getState().auth;
 
     return {
       type: label,
