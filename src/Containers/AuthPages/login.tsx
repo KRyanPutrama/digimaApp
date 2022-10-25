@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
+  Keyboard,
 } from 'react-native';
 import React, { useRef, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -45,77 +46,67 @@ const IndexOfLogin = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#FAF7F0' }}>
-      <KeyboardAvoidingView
-        behavior="position"
-        keyboardVerticalOffset={-responsiveHeight(20)}
-        style={{ flex: 1 }}>
-        <View style={styles.object_one} />
-        <View style={styles.object_two} />
+    <View style={styles.screenContainer}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView
+          behavior="position"
+          keyboardVerticalOffset={-responsiveHeight(20)}
+          style={styles.keyboardAvoidingStyle}>
+          <View style={styles.object_one} />
+          <View style={styles.object_two} />
 
-        <View style={styles.object_three} />
-        <View
-          style={{
-            position: 'absolute',
-            left: responsiveWidth(10),
-            top: responsiveHeight(12),
-            zIndex: 4,
-          }}>
-          <Text
-            style={{
-              fontSize: responsiveScreenFontSize(5),
-              fontWeight: 'bold',
-              color: '#FAF7F0',
-            }}>
-            HELLO
-          </Text>
-        </View>
-        <View
-          style={{
-            height: responsiveHeight(50),
-            alignItems: 'center',
-            paddingTop: responsiveHeight(5),
-          }}>
-          <TextInput
-            ref={usernameRef}
-            placeholder="Username"
-            style={[styles.textInput, { marginVertical: responsiveHeight(2) }]}
-            onChangeText={text => {
-              setFormData(prev => ({
-                ...prev,
-                username: text,
-              }));
-            }}
-            onFocus={event => event.preventDefault()}
-            onEndEditing={() => {
-              passwordRef.current?.focus();
-            }}
-          />
-          <TextInput
-            ref={passwordRef}
-            placeholder="Password"
-            style={styles.textInput}
-            onChangeText={text => {
-              setFormData(prev => ({
-                ...prev,
-                password: text,
-              }));
-            }}
-            onFocus={event => event.preventDefault()}
-          />
+          <View style={styles.object_three} />
+          <View style={styles.helloTextContainer}>
+            <Text style={styles.helloText}>HELLO</Text>
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              ref={usernameRef}
+              placeholder="Username"
+              autoCapitalize={'none'}
+              style={[
+                styles.textInput,
+                { marginVertical: responsiveHeight(2) },
+              ]}
+              onChangeText={text => {
+                setFormData(prev => ({
+                  ...prev,
+                  username: text.toLowerCase(),
+                }));
+              }}
+              onFocus={event => event.preventDefault()}
+              blurOnSubmit={false}
+              onSubmitEditing={() => {
+                passwordRef.current?.focus();
+              }}
+            />
+            <TextInput
+              ref={passwordRef}
+              placeholder="Password"
+              style={styles.textInput}
+              secureTextEntry
+              onChangeText={text => {
+                setFormData(prev => ({
+                  ...prev,
+                  password: text.toLowerCase(),
+                }));
+              }}
+              onFocus={event => event.preventDefault()}
+            />
 
-          {authIsError && <Text style={{ color: 'red' }}>Error occured</Text>}
+            {authIsError && <Text style={styles.errorText}>Error occured</Text>}
 
-          <TouchableWithoutFeedback onPress={onPress}>
-            <View style={styles.buttonContainer}>
-              <Text style={styles.buttonLoginText}>
-                Log<Text style={{ color: '#FAF7F0' }}>in</Text>
-              </Text>
-              <View style={styles.buttonCircle} />
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      </KeyboardAvoidingView>
+            <TouchableWithoutFeedback onPress={onPress}>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.buttonLoginText}>
+                  Log<Text style={styles.buttonLoginText_two}>in</Text>
+                </Text>
+                <View style={styles.buttonCircle} />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </View>
   );
 };
@@ -208,6 +199,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(4),
     letterSpacing: 5.5,
   },
+  buttonLoginText_two: { color: '#FAF7F0' },
   buttonCircle: {
     width: responsiveWidth(10),
     height: responsiveHeight(6),
@@ -216,4 +208,23 @@ const styles = StyleSheet.create({
     right: responsiveWidth(0),
     backgroundColor: '#98A8F8',
   },
+  helloTextContainer: {
+    position: 'absolute',
+    left: responsiveWidth(10),
+    top: responsiveHeight(12),
+    zIndex: 4,
+  },
+  helloText: {
+    fontSize: responsiveScreenFontSize(5),
+    fontWeight: 'bold',
+    color: '#FAF7F0',
+  },
+  screenContainer: { flex: 1, backgroundColor: '#FAF7F0' },
+  textInputContainer: {
+    height: responsiveHeight(50),
+    alignItems: 'center',
+    paddingTop: responsiveHeight(5),
+  },
+  errorText: { color: 'red' },
+  keyboardAvoidingStyle: { flex: 1 },
 });

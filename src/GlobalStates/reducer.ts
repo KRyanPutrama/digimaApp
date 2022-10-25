@@ -6,6 +6,10 @@ import {
   actionReducer as auth,
   ReducerState as AuthReducerState,
 } from './auth';
+import {
+  actionReducer as journey,
+  ReducerState as JourneyReducerState,
+} from './journey';
 
 const persistConfig = {
   key: 'root',
@@ -16,6 +20,7 @@ const persistConfig = {
 const reducers = combineReducers({
   // reducer here
   auth,
+  journey,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -24,4 +29,5 @@ export default persistedReducer;
 
 export type RootReducerState = {
   auth: AuthReducerState;
+  journey: JourneyReducerState;
 };
